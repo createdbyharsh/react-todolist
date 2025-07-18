@@ -16,6 +16,14 @@ function handleClick(){
    setInput("");
 }
 
+function deleteItem(id){
+  setItems((previousItems)=>{
+    return previousItems.filter((x, index)=>{
+      return index !== id;
+    })
+  })
+  console.log("delete running")
+}
   return (
   <div className="container">
     <div className="heading">
@@ -31,8 +39,10 @@ function handleClick(){
     </div>
     <div className="listArea">
       <ul>
-        {items.map((x)=>{
-          return <li>{x}</li>
+        {items.map((x, index)=>{
+          return <li onClick = {()=>{
+            deleteItem(index)
+          }}key = {index}> {x} </li>
         })}
       </ul>
     </div>
