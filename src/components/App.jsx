@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="container">
       <div className="heading">
-        <h1>To-Do list</h1>
+        <h1>React To-do List</h1>
       </div>
       <InputPutField onAdding={handleClick} />
       <div className="listArea">
