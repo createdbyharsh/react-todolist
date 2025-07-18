@@ -1,53 +1,43 @@
 import React, { useState } from "react";
+import ToDoListItems from "./ToDoItem";
+import InputPutField from "./InputArea";
 
-function App(){
-  const [input, setInput]= useState("")
-  const [items ,setItems] = useState([])
+function App() {
+  const [items, setItems] = useState([]);
 
-function handleChange(e){
-  setInput(e.target.value)
-}
+  function handleClick(input) {
+    setItems((previousItems) => {
+      return [...previousItems, input];
+    });
+  }
 
-function handleClick(){
-  setItems((previousItems) => { 
-    return [...previousItems, input]
-    
-   })
-   setInput("");
-}
-
-function deleteItem(id){
-  setItems((previousItems)=>{
-    return previousItems.filter((x, index)=>{
-      return index !== id;
-    })
-  })
-  console.log("delete running")
-}
+  function deleteItem(id) {
+    setItems((previousItems) => {
+      return previousItems.filter((x, index) => {
+        return index !== id;
+      });
+    });
+  }
   return (
-  <div className="container">
-    <div className="heading">
-      <h1>To-Do list</h1>
+    <div className="container">
+      <div className="heading">
+        <h1>To-Do list</h1>
+      </div>
+      <InputPutField onAdding={handleClick} />
+      <div className="listArea">
+        <ul>
+          {items.map((x, index) => (
+            <ToDoListItems
+              key={index}
+              id={index}
+              text={x}
+              onTapping={deleteItem}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
-    <div className="form">
-      <input type="text" onChange = {handleChange} value = {input}/>
-      <button onClick = {handleClick}>
-        <span>
-          Add
-        </span>
-      </button>
-    </div>
-    <div className="listArea">
-      <ul>
-        {items.map((x, index)=>{
-          return <li onClick = {()=>{
-            deleteItem(index)
-          }}key = {index}> {x} </li>
-        })}
-      </ul>
-    </div>
-  </div>
-  )
+  );
 }
 
 export default App;
